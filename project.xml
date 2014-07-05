@@ -4,8 +4,8 @@
 
  	<app file="Main" main="Main" path="bin" />
 
-	<window fps="60" background="0x000000" />
-	<window width="360" height="640" resizable="true" if="linux" />
+	<window fps="120þ" background="0x000000" />
+	<window width="360" height="640" resizable="false" unless="mobile" />
 	<window orientation="portrait" fullscreen="true" if="mobile" />
 	<window orientation="portrait" vsync="true" antialiasing="0" if="cpp" />
 

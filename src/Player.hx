@@ -41,7 +41,7 @@ class Player extends Entity {
 			this.y -= moveSpeed;
 		}
 
-		if (Input.pressed("shoot")) {
+		if (Input.check("shoot")) {
 			shoot();
 		}
 
@@ -63,7 +63,7 @@ class Player extends Entity {
 		var asteroid = collide("asteroid", this.x, this.y);
 
 		if (asteroid != null) {
-			trace(asteroid);
+			
 		}
 
 		super.update();
