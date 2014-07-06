@@ -13,6 +13,10 @@ class Asteroid extends Entity {
 		file += spritesTypes[Math.floor(Math.random() * 2)];
 		file += sprites[tempRand][Math.floor(Math.random() * sprites[tempRand].length)];
 
+		side = Math.random() * 1;
+		angleSpeed = Math.random() * 3;
+		speed = (Math.random() * 2) + 9;
+
 		sprite = new Image("graphics/" + file); 
 
 		graphic = sprite;
@@ -28,7 +32,7 @@ class Asteroid extends Entity {
 	}
 
 	public override function update() {
-		this.y += 3;
+		this.y += speed;
 
 		if (this.y > HXP.height) {
 			this.scene.remove(this);
@@ -37,7 +41,10 @@ class Asteroid extends Entity {
 		this.originX = Math.floor(sprite.width / 2);
 		this.originY = Math.floor(sprite.height / 2);
 
-		this.sprite.angle += 3;
+		if (side > .5)
+			this.sprite.angle += angleSpeed;
+		else
+			this.sprite.angle -= angleSpeed;
 
 
 		super.update();
@@ -65,4 +72,8 @@ class Asteroid extends Entity {
 		];
 
 		private var sprite:Image;
+
+		private var side:Float;
+		private var angleSpeed:Float;
+		private var speed:Float;
 }

@@ -21,7 +21,7 @@ class Bullet extends Entity {
 	public override function update() {
 		super.update();
 		
-		this.y -= 10;
+		this.y -= 20;
 
 		timer -= HXP.elapsed;
 

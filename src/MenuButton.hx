@@ -5,8 +5,10 @@ import com.haxepunk.HXP;
 import com.haxepunk.utils.Input;
 import com.haxepunk.utils.Touch;
 import com.haxepunk.utils.Key;
+import openfl.Assets;
 
 import MainScene;
+import MenuScene;
 
 
 class MenuButton extends Entity {
@@ -22,6 +24,7 @@ class MenuButton extends Entity {
 		text = new Text(txt);
 		text.color = 0x000000;
 		text.size = 40;
+		text.font = Assets.getFont("font/kenpixel_mini_square.ttf").fontName;
 		
 		text.centerOrigin();
 		sprite.centerOrigin();
@@ -30,25 +33,48 @@ class MenuButton extends Entity {
 		this.addGraphic(sprite);
 		this.addGraphic(text);
 
+		this.layer = -5;
+
 		Input.define("enter", [Key.ENTER, Key.SPACE]);
 	}
 
 	public override function update() {
 		Input.touchPoints(onTouch);
 
+		if (Input.mouseReleased) {
+			if ((Input.mouseX > this.left && Input.mouseX < this.right) && (Input.mouseY > this.top && Input.mouseY < this.bottom)) {
+				if (this.text.text != "Menu") {
+					HXP.scene = new MainScene();
+				}
+				else  {
+					HXP.scene = new MenuScene();
+				}
+			}
+		}
+
 		if (Input.check("enter")) {
-			HXP.scene = new MainScene();
+			if (this.text.text != "Menu") {
+				HXP.scene = new MainScene();
+			}
+			else  {
+				HXP.scene = new MenuScene();
+			}
 		}
 	}
 
 	private function onTouch(touch:Touch) {
 		if ((touch.x > this.left && touch.x < this.right) && (touch.y > this.top && touch.y < this.bottom)) {
-			HXP.scene = new MainScene();
+			if (this.text.text != "Menu") {
+				HXP.scene = new MainScene();
+			}
+			else  {
+				HXP.scene = new MenuScene();
+			}
 		}
 	}
 
 	private var txt:String;
 	private var sprite:Image;
-	public var text:Text;
+	private var text:Text;
 
 }

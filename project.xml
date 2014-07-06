@@ -12,6 +12,7 @@
 	<source path="src" />
 
 	<haxelib name="HaxePunk" />
+	<haxelib name="openfl" version="1.4.0" />
 
 	<assets path="assets/graphics" rename="graphics" include="*.png|*.jpg" />
 	<assets path="assets/audio" rename="audio" include="*.mp3" if="flash" />
