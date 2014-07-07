@@ -15,17 +15,21 @@ class Lives extends Entity {
 			new Image("graphics/playerShip1_damage3.png")
 		];
 
+		liveBar = Image.createRect(Math.floor(baseSprite.width * .75), 10, 0x00FF00);
+		liveBar.y += 70;
+
 		baseSprite.scale = .75;
 
 		for (i in 0...sprite.length) {
 			sprite[i].scale = .75;
 		}
 
-		super(HXP.width - (baseSprite.width * .75 + 20), HXP.height - (baseSprite.height * .75 + 20));
+		super(HXP.width - (baseSprite.width * .75 + 20), HXP.height - (baseSprite.height * .75 + 50));
 
 		graphic = baseSprite;
 
 		this.addGraphic(sprite[0]);
+		this.addGraphic(liveBar);
 
 
 		damage = 0;
@@ -33,10 +37,16 @@ class Lives extends Entity {
 	}
 
 	public inline function addDamage() {damage++;}
+	public inline function remDamage() {if (damage != 0) damage--;}
 
 	public override function update() {
 		graphic = baseSprite;
 		this.addGraphic(sprite[damage]);
+
+		liveBar.scaledWidth = (liveBar.width / 4) * (4 - damage);
+
+		this.addGraphic(liveBar);
+
 		if (damage > 3) {
 			var player:Array<Player> = [];
 			this.scene.getClass(Player, player);
@@ -49,6 +59,7 @@ class Lives extends Entity {
 
 	private var sprite:Array<Image> = [];
 	private var baseSprite:Image;
+	private var liveBar:Image;
 	private var damage:Int;
 
 }

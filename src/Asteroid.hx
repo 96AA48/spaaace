@@ -21,10 +21,9 @@ class Asteroid extends Entity {
 
 		graphic = sprite;
 		
+		setHitbox(sprite.width - 15, sprite.height);
+
 		sprite.centerOrigin();
-
-
-		setHitbox(sprite.width, sprite.height);
 
 		type = "asteroid";
 
@@ -38,8 +37,8 @@ class Asteroid extends Entity {
 			this.scene.remove(this);
 		}
 
-		this.originX = Math.floor(sprite.width / 2);
-		this.originY = Math.floor(sprite.height / 2);
+		this.centerOrigin();
+		sprite.centerOrigin();
 
 		if (side > .5)
 			this.sprite.angle += angleSpeed;

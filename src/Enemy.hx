@@ -1,9 +1,11 @@
 import com.haxepunk.Entity;
 import com.haxepunk.graphics.Image;
 import com.haxepunk.HXP;
+import com.haxepunk.Sfx;
 
 import Player;
 import Score;
+import EnemyBullet;
 
 class Enemy extends Entity {
 
@@ -12,6 +14,12 @@ class Enemy extends Entity {
 
 		color = Math.floor(Math.random() * 4);
 		enemyType = Math.floor(Math.random() * 5) + 1;
+
+		#if flash
+			bulletSound = new Sfx("audio/laser3.mp3");
+		#else
+			bulletSound = new Sfx("audio/laser3.wav");
+		#end
 
 
 		sprite = new Image("graphics/" + enemies[color] + enemyType + ".png");
@@ -31,9 +39,8 @@ class Enemy extends Entity {
 		layer = -1;
 	}
 
-
 	private function assignLocation() {
-		if (enemyType <= 2) {
+		if (enemyType < 3) {
 			arr = [
 				Math.floor(Math.random() * (HXP.width - this.width)),
 				Math.floor(Math.random() * 400)
@@ -76,8 +83,30 @@ class Enemy extends Entity {
 		return arr;
 	}
 
+	private function shoot() {
+		if (shootTimer < 0) {
+			if (enemyType != 3) {
+				this.scene.add(new EnemyBullet(this.x, this.y + this.height));
+			}
+			else {
+				this.scene.add(new EnemyBullet(this.x - 30, this.y + this.height));	
+				this.scene.add(new EnemyBullet(this.x + 30, this.y + this.height));	
+			}
+
+			if (enemyType == 4) {
+				shootTimer = 1;
+			}
+			else {
+				shootTimer = 5;
+			}
+
+			bulletSound.play();
+		}
+	}
+
 	public override function update() {
 		turnTimer -= HXP.elapsed;
+		shootTimer -= HXP.elapsed;
 		this.centerOrigin();
 
 		healthSprite.scaledWidth = (sprite.width / originalHealth) * health;
@@ -92,8 +121,19 @@ class Enemy extends Entity {
 				turnTimer = 2;
 			else if (enemyType == 3 || enemyType == 4)
 				turnTimer = 1;
-			else if (enemyType == 1)
+			else if (enemyType == 1 || enemyType == 5)
 				turnTimer = .5;
+		}
+
+		if (enemyType > 2) {
+			if (Math.random() < .1 && shootTimer < 0) {
+				var player = this.scene.getInstance("player");
+				if (this.x > player.left && this.x < player.right) {
+					turnTimer = 1;
+					loc = [this.x, this.y];
+					shoot();
+				}
+			}
 		}
 
 		var bullet:Entity = collide("bullet", this.x, this.y);
@@ -103,7 +143,7 @@ class Enemy extends Entity {
 			var score:Array<Score> = [];
 			this.scene.getClass(Score, score);
 
-			score[0].add(15);
+			score[0].add(1500);
 
 			this.scene.remove(bullet);
 		}
@@ -121,6 +161,7 @@ class Enemy extends Entity {
 
 	private var sprite:Image;
 	private var healthSprite:Image;
+	private var bulletSound:Sfx;
 
 	private var color:Int;
 	private var enemyType:Int;
@@ -131,6 +172,7 @@ class Enemy extends Entity {
 	private var antX:Float;
 
 	private var turnTimer:Float = 0;
+	private var shootTimer:Float = 0;
 	private var moveSpeed:Int = 10;
 	private var loc:Array<Float> = [];
 }

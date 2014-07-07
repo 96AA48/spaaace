@@ -13,6 +13,7 @@ class Spawner extends Entity {
 		spawnStarTime -= HXP.elapsed;
 		spawnAsteroidTime -= HXP.elapsed;
 		spawnEnemyTime -= HXP.elapsed;
+		spawnPickupTime -= HXP.elapsed;
 
 		if (spawnAsteroidTime < 0) {
 			this.scene.add(new Asteroid(HXP.width * Math.random(), -16));
@@ -35,10 +36,16 @@ class Spawner extends Entity {
 			spawnEnemyTime = 5;
 		}
 
+		if (spawnPickupTime < 0) {
+			this.scene.add(new Pickup(HXP.width * Math.random(), -50));
+			spawnPickupTime = 5 * Math.random() + 5;
+		}
+
 		super.update();
 	}
 
 	private var spawnAsteroidTime:Float = .5;
 	private var spawnStarTime:Float = .5;
 	private var spawnEnemyTime:Float = 5;
+	private var spawnPickupTime:Float = 10;
 }

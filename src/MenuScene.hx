@@ -31,6 +31,11 @@ class MenuScene extends Scene {
 		addGraphic(copy);
 	}
 
+	public override function end() {
+		this.removeAll();
+		update();
+	}
+
 	public override function update() {
 		super.update();
 		backdrop.y += 1;

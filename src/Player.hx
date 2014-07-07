@@ -5,6 +5,7 @@ import com.haxepunk.utils.Input;
 import com.haxepunk.HXP;
 import com.haxepunk.utils.Touch;
 import com.haxepunk.graphics.Text;
+import com.haxepunk.Sfx;
 import openfl.Assets;
 
 import Bullet;
@@ -15,6 +16,15 @@ class Player extends Entity {
 	public function new() {
 		super(HXP.halfWidth - 16, HXP.height - 200);
 		baseSprite = new Image("graphics/playerShip1_green.png");
+		shield = new Image("graphics/shield1.png");
+		shield.x -= 16;
+		shield.y -= 20;
+
+		#if flash
+			laser = new Sfx("audio/laser4.mp3");
+		#else
+			laser = new Sfx("audio/laser4.wav");
+		#end
 
 		graphic = baseSprite;
 
@@ -78,7 +88,7 @@ class Player extends Entity {
 	}
 
 	private function onTouch(touch:Touch) {
-		if (touch.y < HXP.height - 100)
+		if (touch.y < HXP.height - 100 && (touch.y > 500) && this.y > 0)
 			this.moveTowards(touch.x - (this.width / 2), touch.y - (this.height * 2), moveSpeed * 1.5);
 	}
 
@@ -86,10 +96,11 @@ class Player extends Entity {
 		var score:Array<Score> = [];
 
 		this.scene.getClass(Score, score);
-
-		score[0].rem(5);
-
-		this.scene.add(new Bullet(this.x + this.width / 2, this.y));	
+	
+		score[0].rem(500);
+		this.scene.add(new Bullet(this.x + this.width / 2, this.y));
+		laser.play();
+		
 	}
 
 	public function die() {
@@ -108,6 +119,10 @@ class Player extends Entity {
 		handleInput();
 		hitPause -= HXP.elapsed;
 		animWait -= HXP.elapsed;
+		shieldTimer -= HXP.elapsed;
+
+		if (shieldTimer < 0)
+			shielded = false;
 
 		if (animWait < 0) {
 
@@ -126,11 +141,28 @@ class Player extends Entity {
 			this.addGraphic(fireEffectLeft);
 			this.addGraphic(fireEffectRight);
 
+			if (shielded)
+				this.addGraphic(shield);
+
 			currentAnim++;
 			animWait = .75;
 		}
 
-		if (collide("asteroid", this.x, this.y) != null && hitPause < 0) {
+		if ((hitPause > 0 && hitPause < .3) || (hitPause > .6 && hitPause < .9) || (hitPause > 1.2 && hitPause < 1.5)) {
+			this.visible = false;
+		}
+		else {
+			this.visible = true;	
+		}
+
+		if (collide("asteroid", this.x, this.y) != null && hitPause < 0 && !shielded) {
+			var lives:Array<Lives> = [];
+			this.scene.getClass(Lives, lives);
+			lives[0].addDamage();
+			hitPause = 1.5;
+		}
+
+		if (collide("enemybullet", this.x, this.y) != null && hitPause < 0 && !shielded) {
 			var lives:Array<Lives> = [];
 			this.scene.getClass(Lives, lives);
 			lives[0].addDamage();
@@ -141,6 +173,8 @@ class Player extends Entity {
 	}
 
 	private var baseSprite:Image;
+	private var shield:Image;
+	private var laser:Sfx;
 	private var fireEffectsLeft:Array<Image> = [];
 	private var fireEffectsRight:Array<Image> = [];
 
@@ -149,8 +183,11 @@ class Player extends Entity {
 	private var fireEffectRight:Image;
 
 	private var moveSpeed:Int = 7;
-	private var hitPause:Float = 1.5;
+	private var hitPause:Float = 0;
 
 	private var animWait:Float = .75;
 	private var currentAnim:Int = 0;
+
+	public var shielded:Bool = false;
+	public var shieldTimer:Float = 1;
 }
