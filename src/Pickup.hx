@@ -17,7 +17,7 @@ class Pickup extends Entity {
 			sound = new Sfx("audio/powerUp6.wav");
 		#end
 
-		var tempRand = .9 /*Math.random()*/;
+		var tempRand = Math.random();
 
 		if (tempRand < .15) 
 			randType = 1;

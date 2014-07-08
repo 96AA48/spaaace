@@ -93,14 +93,15 @@ class Player extends Entity {
 	}
 
 	public function shoot() {
-		var score:Array<Score> = [];
+		if (this.y > 0) {
+			var score:Array<Score> = [];
 
-		this.scene.getClass(Score, score);
-	
-		score[0].rem(500);
-		this.scene.add(new Bullet(this.x + this.width / 2, this.y));
-		laser.play();
-		
+			this.scene.getClass(Score, score);
+
+			score[0].rem(500);
+			this.scene.add(new Bullet(this.x + this.width / 2, this.y));
+			laser.play();
+		}
 	}
 
 	public function die() {

@@ -16,7 +16,7 @@ class Lives extends Entity {
 		];
 
 		liveBar = Image.createRect(Math.floor(baseSprite.width * .75), 10, 0x00FF00);
-		liveBar.y += 70;
+		liveBar.y += 65;
 
 		baseSprite.scale = .75;
 
@@ -24,7 +24,7 @@ class Lives extends Entity {
 			sprite[i].scale = .75;
 		}
 
-		super(HXP.width - (baseSprite.width * .75 + 20), HXP.height - (baseSprite.height * .75 + 50));
+		super(HXP.width - (baseSprite.width * .75 + 20), 10);
 
 		graphic = baseSprite;
 

@@ -15,7 +15,7 @@ class MenuScene extends Scene {
 		backdrop = new Backdrop("graphics/darkPurple.png", true, true);
 		var play = new MenuButton(HXP.width / 2, HXP.height / 2, "Play!");
 		var title = new Title();
-		var copy = new Text("By Bram \"96AA48\" van der Veen, 2014", HXP.width / 2, HXP.height - 50);
+		var copy = new Text("By Bram \"96AA48\" van der Veen, 2014\nGraphics and Sfx by Kenney\nMusic by Jensan", HXP.width / 2, HXP.height - 50, {align: "center"});
 		var spawner = new Spawner();
 
 		copy.size = 22;
