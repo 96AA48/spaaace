@@ -5,17 +5,18 @@ import com.haxepunk.masks.Hitbox;
 import com.haxepunk.HXP;
 
 import Enemy;
+import Explosion;
 
 class Boss extends Entity {
 
-	public function new () {
+	public function new (clr:Int) {
 
-		var color:Int = Math.floor(Math.random() * 4);
+		color = clr;
 		currentSprite = sprites[color];
 		currentSprite.scale = 8;
 		currentSprite.smooth = false;
 
-		maxEnemies = Math.floor(Math.random() * (color + 1) * 4);
+		maxEnemies = Math.floor(Math.random() * (color + 1) * 2);
 
 		graphic = currentSprite;
 
@@ -43,13 +44,14 @@ class Boss extends Entity {
 
 	public override function update() {
 		super.update();
-
 		spawnTimer -= HXP.elapsed;
+		explosionTimer -= HXP.elapsed;
+
 		var enemies:Array<Enemy> = [];
 		this.scene.getClass(Enemy, enemies);
 
-		if (spawnTimer < 0 && enemies.length != maxEnemies) {
-			this.scene.add(new Enemy(this.width / 2, this.height / 2));
+		if (spawnTimer < 0 && enemies.length != maxEnemies - 1 && canSpawn) {
+			this.scene.add(new Enemy(this.width / 2, 20, color, Math.floor(Math.random() * 4) + 1));
 			spawnTimer = .75;
 		}
 
@@ -57,8 +59,24 @@ class Boss extends Entity {
 
 		if (this.y < currentSprite.height * 8 * -.5)
 			this.y += 2;
+		else if (!dead)
+			canSpawn = true;
 
-		healthBar.scaledWidth = (healthBar.width / originalHealth) * health;
+		if (health > 0) healthBar.scaledWidth = (healthBar.width / originalHealth) * health;
+		else {	
+			dead = true;
+			canSpawn = false;
+
+			if (explosionTimer < 0 && counter != 100) {
+				healthBarBackground.alpha = healthBar.alpha = currentSprite.alpha -= 0.01;
+				this.scene.add(new Explosion(this.x + (Math.random() * currentSprite.width * 8), this.y + (Math.random() * currentSprite.height * 8) + 100, this.scene.getInstance("player")));
+				explosionTimer = Math.random() * .2;
+				counter++;
+			}
+			else if (counter == 100) {
+				this.scene.remove(this);
+			}
+		}
 
 		var bullet:Entity = this.collide("bullet", this.x, this.y);
 
@@ -77,12 +95,17 @@ class Boss extends Entity {
 		new Image("graphics/ufoYellow.png")
 	];
 
+	private var color:Int;
 	private var health:Int;
 	private var originalHealth:Int;
 	private var healthBar:Image;
 	private var healthBarBackground:Image;
 
 	private var maxEnemies:Int;
+	private var canSpawn:Bool = false;
 	private var spawnTimer:Float = .75;
+	private var explosionTimer:Float = 0;
+	private var counter:Int = 0;
+	private var dead:Bool = false;
 
 }

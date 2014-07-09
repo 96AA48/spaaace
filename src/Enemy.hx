@@ -9,11 +9,11 @@ import EnemyBullet;
 
 class Enemy extends Entity {
 
-	public function new (x:Float, y:Float) {
+	public function new (x:Float, y:Float, clr:Int, eT:Int) {
 		super(x, y);
 
-		color = Math.floor(Math.random() * 4);
-		enemyType = Math.floor(Math.random() * 5) + 1;
+		color = clr;
+		enemyType = eT;
 
 		#if flash
 			bulletSound = new Sfx("audio/laser3.mp3");
@@ -26,7 +26,7 @@ class Enemy extends Entity {
 		healthSprite = Image.createRect(sprite.width, 10, 0x00FF00);
 		healthSprite.y -= 50;
 
-		originalHealth = health = (enemyType * 2 * color);
+		originalHealth = health = (enemyType * 2 * (color + 1));
 
 		sprite.centerOrigin();
 		healthSprite.centerOrigin();
@@ -43,7 +43,7 @@ class Enemy extends Entity {
 		if (enemyType < 3) {
 			arr = [
 				Math.floor(Math.random() * (HXP.width - this.width)),
-				Math.floor(Math.random() * 400)
+				Math.floor((Math.random() * 200) + 350)
 			];
 		}
 		else if (enemyType >= 3 && enemyType <= 4) {
@@ -57,7 +57,7 @@ class Enemy extends Entity {
 
 			arr = [
 				antX,
-				Math.random() * 400
+				(Math.random() * 200) + 350
 			];
 		}
 		else {
@@ -76,7 +76,7 @@ class Enemy extends Entity {
 
 			arr = [
 				antX,
-				Math.random() * 400
+				(Math.random() * 200) + 350
 			];	
 		}
 

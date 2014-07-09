@@ -18,8 +18,6 @@ class Player extends Entity {
 		super(HXP.halfWidth - 16, HXP.height - 200);
 		baseSprite = new Image("graphics/playerShip1_green.png");
 		shield = new Image("graphics/shield1.png");
-		shield.x -= 16;
-		shield.y -= 20;
 
 		#if flash
 			laser = new Sfx("audio/laser4.mp3");
@@ -83,7 +81,7 @@ class Player extends Entity {
 			this.y -= moveSpeed;
 		}
 
-		if (Input.pressed("shoot")) {
+		if (Input.check("shoot")) {
 			shoot();
 		}
 
@@ -147,6 +145,8 @@ class Player extends Entity {
 			graphic = baseSprite;
 			this.addGraphic(fireEffectLeft);
 			this.addGraphic(fireEffectRight);
+
+			shield.centerOrigin();
 
 			if (shielded)
 				this.addGraphic(shield);

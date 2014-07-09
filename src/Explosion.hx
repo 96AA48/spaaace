@@ -17,6 +17,8 @@ class Explosion extends Entity {
 
 		this.centerOrigin();
 		sprite.centerOrigin();
+
+		layer = -4;
 	}
 
 	private function die () {

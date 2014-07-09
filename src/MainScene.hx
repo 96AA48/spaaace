@@ -18,10 +18,8 @@ class MainScene extends Scene
 		var player = new Player();	
 		var button = new Button();
 		var spawner = new Spawner();
-		var enemy = new Enemy(-160, 0);
 		var lives = new Lives();
 		var score = new Score();
-		var boss = new Boss();
 
 		#if flash
 			music = new Sfx("audio/loop.mp3");
@@ -36,7 +34,6 @@ class MainScene extends Scene
 			add(button);
 		#end
 
-		add(boss);
 		add(player);
 		add(lives);
 		add(score);
