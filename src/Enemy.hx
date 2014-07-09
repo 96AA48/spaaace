@@ -36,7 +36,7 @@ class Enemy extends Entity {
 
 		setHitbox(sprite.width, sprite.height);
 
-		layer = -1;
+		layer = -4;
 	}
 
 	private function assignLocation() {
@@ -111,7 +111,7 @@ class Enemy extends Entity {
 
 		healthSprite.scaledWidth = (sprite.width / originalHealth) * health;
 		
-		if (this.x != loc[0] && this.y != loc[1])
+		if (this.x != loc[0] && this.y != loc[1] && !dying)
 			this.moveTowards(loc[0], loc[1], moveSpeed);
 
 		if (turnTimer < 0) {
@@ -148,8 +148,18 @@ class Enemy extends Entity {
 			this.scene.remove(bullet);
 		}
 
-		if (health == 0)
-			this.scene.remove(this);
+		if (health == 0) {
+			die();
+		}
+	}
+
+	private function die() {
+		if (!died) {
+			dying = true;
+			died = true;
+			this.visible = false;
+			this.scene.add(new Explosion(this.x, this.y, this));
+		}
 	}
 	
 	private var enemies:Array<String> = [
@@ -167,6 +177,8 @@ class Enemy extends Entity {
 	private var enemyType:Int;
 	private var health:Int;
 	private var originalHealth:Int;
+	private var dying:Bool = false;
+	private var died:Bool = false;
 
 	private var arr:Array<Float>;
 	private var antX:Float;

@@ -33,6 +33,7 @@ class Lives extends Entity {
 
 
 		damage = 0;
+		layer = -4;
 
 	}
 

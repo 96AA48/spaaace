@@ -12,7 +12,7 @@ class Spawner extends Entity {
 	public override function update() {
 		spawnStarTime -= HXP.elapsed;
 		spawnAsteroidTime -= HXP.elapsed;
-		spawnEnemyTime -= HXP.elapsed;
+		// spawnEnemyTime -= HXP.elapsed;
 		spawnPickupTime -= HXP.elapsed;
 
 		if (spawnAsteroidTime < 0) {

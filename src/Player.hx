@@ -11,6 +11,7 @@ import openfl.Assets;
 import Bullet;
 import Lives;
 import Score;
+import Explosion;
 
 class Player extends Entity {
 	public function new() {
@@ -41,13 +42,12 @@ class Player extends Entity {
 		];
 
 		fireEffectLeft = fireEffectsLeft[currentAnim];
-		fireEffectLeft.x = 17;
-		fireEffectLeft.y = 55;
+		fireEffectLeft.x = -30;
+		fireEffectLeft.y = 24;
 
 		fireEffectRight = fireEffectsRight[currentAnim];
-		fireEffectRight.x = 67;
-		fireEffectRight.y = 55;
-
+		fireEffectRight.x = 19;
+		fireEffectRight.y = 24;
 
 		this.addGraphic(fireEffectLeft);
 		this.addGraphic(fireEffectRight);
@@ -61,6 +61,9 @@ class Player extends Entity {
 		Input.define("shoot", [Key.SPACE]);
 
 		name = type = "player";
+
+		this.centerOrigin();
+		baseSprite.centerOrigin();
 
 		layer = -1;
 
@@ -88,7 +91,7 @@ class Player extends Entity {
 	}
 
 	private function onTouch(touch:Touch) {
-		if (touch.y < HXP.height - 100 && (touch.y > 500) && this.y > 0)
+		if (touch.y < HXP.height - 100 && (touch.y > 700) && this.y > 0)
 			this.moveTowards(touch.x - (this.width / 2), touch.y - (this.height * 2), moveSpeed * 1.5);
 	}
 
@@ -99,13 +102,16 @@ class Player extends Entity {
 			this.scene.getClass(Score, score);
 
 			score[0].rem(500);
-			this.scene.add(new Bullet(this.x + this.width / 2, this.y));
+			this.scene.add(new Bullet(this.x, this.y - this.height / 2));
 			laser.play();
 		}
 	}
 
 	public function die() {
 		this.visible = false;
+
+		this.scene.add(new Explosion(this.x, this.y, this));
+
 		this.x = HXP.halfWidth;
 		this.y = -200;
 		var txt:Text = new Text("You died!", HXP.halfWidth - 225, HXP.halfHeight - 250, 500, 50, {size: 100});
@@ -131,12 +137,12 @@ class Player extends Entity {
 				currentAnim = 0;
 
 			fireEffectLeft = fireEffectsLeft[currentAnim];
-			fireEffectLeft.x = 17;
-			fireEffectLeft.y = 60;
+			fireEffectLeft.x = -30;
+			fireEffectLeft.y = 24;
 
 			fireEffectRight = fireEffectsRight[currentAnim];
-			fireEffectRight.x = 67;
-			fireEffectRight.y = 60;
+			fireEffectRight.x = 19;
+			fireEffectRight.y = 24;
 
 			graphic = baseSprite;
 			this.addGraphic(fireEffectLeft);
