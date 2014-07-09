@@ -6,6 +6,7 @@ import com.haxepunk.HXP;
 
 import Enemy;
 import Explosion;
+import Spawner;
 
 class Boss extends Entity {
 
@@ -72,8 +73,15 @@ class Boss extends Entity {
 				this.scene.add(new Explosion(this.x + (Math.random() * currentSprite.width * 8), this.y + (Math.random() * currentSprite.height * 8) + 100, this.scene.getInstance("player")));
 				explosionTimer = Math.random() * .2;
 				counter++;
+				var spawner:Array<Spawner> = [];
+				this.scene.getClass(Spawner, spawner);
+				spawner[0].sublevel = 3;
 			}
 			else if (counter == 100) {
+				var spawner:Array<Spawner> = [];
+				this.scene.getClass(Spawner, spawner);
+				spawner[0].bossSpawned = false;
+
 				this.scene.remove(this);
 			}
 		}
