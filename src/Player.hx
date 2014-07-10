@@ -81,7 +81,7 @@ class Player extends Entity {
 			this.y -= moveSpeed;
 		}
 
-		if (Input.check("shoot")) {
+		if (Input.pressed("shoot")) {
 			shoot();
 		}
 
