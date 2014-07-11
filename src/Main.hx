@@ -15,8 +15,7 @@ class Main extends Engine
 		HXP.resize(360, 640);
 	#end
 
-		// HXP.scene = new MainScene();
-		HXP.scene = new MenuScene();
+		HXP.scene = new StoreScene();
 	}
 
 	public static function main() { new Main(); }
