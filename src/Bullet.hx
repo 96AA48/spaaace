@@ -7,12 +7,12 @@ class Bullet extends Entity {
 	public function new(x:Float, y:Float) {
 		super(x, y);
 
-		laser1 = new Image("graphics/laserGreen09.png");
-		laser2 = new Image("graphics/laserGreen13.png");
+		laser1 = new Image("graphics/laserGreen04.png");
+		laser2 = new Image("graphics/laserGreen12.png");
 
 		graphic = laser1;
 
-		setHitbox(9, 37);
+		setHitboxTo(laser1);
 
 		type = "bullet";
 

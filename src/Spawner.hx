@@ -3,12 +3,14 @@ import com.haxepunk.HXP;
 
 import Enemy;
 import Boss;
+import Star;
+import Pickup;
+import Asteroid;
 
 class Spawner extends Entity {
 
 	public function new() {
 		super(0,0);
-
 	}
 
 	public override function update() {
@@ -49,6 +51,26 @@ class Spawner extends Entity {
 		else {
 			trace("YOU BEAT THE GAME!");
 		}
+
+
+		spawnStarTime -= HXP.elapsed;
+		spawnAsteroidTime -= HXP.elapsed;
+		spawnPickupTime -= HXP.elapsed;
+
+		if (spawnAsteroidTime < 0) {
+			this.scene.add(new Asteroid(HXP.width * Math.random(), -16));
+			spawnAsteroidTime = .5;
+		}
+
+		if (spawnStarTime < 0) {
+			this.scene.add(new Star(HXP.width * Math.random()));
+			spawnStarTime = .5;
+		}
+
+		if (spawnPickupTime < 0) {
+			this.scene.add(new Pickup(HXP.width * Math.random(), -50));
+			spawnPickupTime = 5 * Math.random() + 5;
+		}
 	}
 
 	private var level:Int = 0;
@@ -58,4 +80,8 @@ class Spawner extends Entity {
 	private var enemyType:Int = 1;
 
 	public var bossSpawned:Bool = false;
+
+	private var spawnPickupTime:Float = 10;
+	private var spawnAsteroidTime:Float = .5;
+	private var spawnStarTime:Float = .5;
 }

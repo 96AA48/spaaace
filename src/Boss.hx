@@ -17,7 +17,7 @@ class Boss extends Entity {
 		currentSprite.scale = 8;
 		currentSprite.smooth = false;
 
-		maxEnemies = Math.floor(Math.random() * (color + 1) * 2);
+		maxEnemies = Math.floor((color + 1) * 2);
 
 		graphic = currentSprite;
 
@@ -51,7 +51,9 @@ class Boss extends Entity {
 		var enemies:Array<Enemy> = [];
 		this.scene.getClass(Enemy, enemies);
 
-		if (spawnTimer < 0 && enemies.length != maxEnemies - 1 && canSpawn) {
+		trace(enemies.length + ", " + maxEnemies);
+ 
+		if (spawnTimer < 0 && enemies.length != maxEnemies && canSpawn) {
 			this.scene.add(new Enemy(this.width / 2, 20, color, Math.floor(Math.random() * 4) + 1));
 			spawnTimer = .75;
 		}
@@ -115,5 +117,4 @@ class Boss extends Entity {
 	private var explosionTimer:Float = 0;
 	private var counter:Int = 0;
 	private var dead:Bool = false;
-
 }

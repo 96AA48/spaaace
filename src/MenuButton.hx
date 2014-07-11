@@ -45,10 +45,12 @@ class MenuButton extends Entity {
 			if ((Input.mouseX > this.left && Input.mouseX < this.right) && (Input.mouseY > this.top && Input.mouseY < this.bottom)) {
 				if (this.text.text != "Menu") {
 					HXP.scene = null;
+					Assets.cache.clear();
 					HXP.scene = new MainScene();
 				}
 				else  {
 					HXP.scene = null;
+					Assets.cache.clear();
 					HXP.scene = new MenuScene();
 				}
 			}
@@ -57,10 +59,12 @@ class MenuButton extends Entity {
 		if (Input.check("enter")) {
 			if (this.text.text != "Menu") {
 				HXP.scene = null;
+				Assets.cache.clear();
 				HXP.scene = new MainScene();
 			}
 			else  {
 				HXP.scene = null;
+				Assets.cache.clear();
 				HXP.scene = new MenuScene();
 			}
 		}
@@ -70,10 +74,12 @@ class MenuButton extends Entity {
 		if ((touch.x > this.left && touch.x < this.right) && (touch.y > this.top && touch.y < this.bottom)) {
 			if (this.text.text != "Menu") {
 				HXP.scene = null;
+				Assets.cache.clear();
 				HXP.scene = new MainScene();
 			}
 			else  {
 				HXP.scene = null;
+				Assets.cache.clear();
 				HXP.scene = new MenuScene();
 			}
 		}
