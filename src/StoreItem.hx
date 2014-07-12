@@ -1,6 +1,7 @@
 import com.haxepunk.Entity;
 import com.haxepunk.graphics.Image;
 import com.haxepunk.graphics.Text;
+import com.haxepunk.utils.Input;
 import openfl.Assets;
 
 class StoreItem extends Entity {
@@ -8,10 +9,11 @@ class StoreItem extends Entity {
 	public function new(x:Float, y:Float, type:Int) {
 		super(x, y);
 
+		which = type;
+
 		button = new Image("graphics/buttonGreen.png");
 		button.scale = 2;
 
-		
 		text = new Text(itemnames[type]);
 		text.color = 0x000000;
 		text.size = 40;
@@ -31,38 +33,46 @@ class StoreItem extends Entity {
 			sprites[i].centerOrigin();
 		}
 
-		arrowLeft = new Image("graphics/fire05.png");
-		arrowLeft.angle = 90;
-		arrowLeft.x = -440;
-		arrowLeft.centerOrigin();
+		if (type != 4) currentSprite = 1;
+		else currentSprite = 0;
 
-		arrowRight = new Image("graphics/fire05.png");
-		arrowRight.angle = -90;
-		arrowRight.x = -260;
-		arrowRight.centerOrigin();
-
-
-		this.addGraphic(sprites[0]);
-
-		this.addGraphic(arrowLeft);
-		this.addGraphic(arrowRight);
+		this.addGraphic(sprites[currentSprite]);
 
 		this.addGraphic(button);
 		this.addGraphic(text);
 
 	}
 
-	private var button:Image;
-	
-	private var sprites:Array<Image> = [];
-	private var arrowLeft:Image;
-	private var arrowRight:Image;
+	public override function update() {
+		super.update();
 
+		graphic = sprites[currentSprite];
+
+		this.addGraphic(button);
+		this.addGraphic(text);
+	}
+
+	public function goLeft() {
+		if (currentSprite != 0) {
+			currentSprite -= 1;
+		}
+	}
+
+	public function goRight() {
+		if (currentSprite != items[which].length - 1) {
+			currentSprite += 1;
+		}
+	}
+
+	private var currentSprite:Int;
+	private var which:Int;
+	private var button:Image;
+	private var sprites:Array<Image> = [];
 	private var text:Text;
 
 	public static var itemnames:Array<String> = [
 		"Fat Jumper",
-		"Speeder Jumper",
+		"Speed Jumper",
 		"X3 Jumper",
 		"V2 Laser",
 		"Heavy Laser"
@@ -85,6 +95,7 @@ class StoreItem extends Entity {
 			"playerShip2_orange.png"
 		],
 		[
+			"laserGreen04.png",
 			"laserGreen06.png",
 			"laserBlue06.png"
 		],
