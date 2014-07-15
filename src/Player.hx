@@ -12,11 +12,23 @@ import Bullet;
 import Lives;
 import Score;
 import Explosion;
+import StoreScene;
+import Save;
 
 class Player extends Entity {
 	public function new() {
 		super(HXP.halfWidth - 16, HXP.height - 200);
-		baseSprite = new Image("graphics/playerShip1_green.png");
+		baseSprite = new Image("graphics/" + Save.load().ship);
+
+		if (Save.load().ship_type == 1) 
+			moveSpeed = 10;
+		else if (Save.load().ship_type == 2) 
+			moveSpeed = 7;
+		else 
+			moveSpeed = 5;
+
+		trace(moveSpeed + ", " + Save.load().ship_type);
+
 		shield = new Image("graphics/shield1.png");
 
 		#if flash
@@ -39,18 +51,22 @@ class Player extends Entity {
 			new Image("graphics/fire17.png"),
 		];
 
-		fireEffectLeft = fireEffectsLeft[currentAnim];
-		fireEffectLeft.x = -30;
-		fireEffectLeft.y = 24;
+		for (i in 0...fireEffectsLeft.length) {
+			fireEffectsLeft[i].originX = fireEffectsLeft[i].width / 2;
+			fireEffectsLeft[i].x = -30;
+			fireEffectsLeft[i].y = 24;
+			fireEffectsRight[i].originX = fireEffectsLeft[i].width / 2;
+			fireEffectsRight[i].x = 30;
+			fireEffectsRight[i].y = 24;
+		}
 
+		fireEffectLeft = fireEffectsLeft[currentAnim];		
 		fireEffectRight = fireEffectsRight[currentAnim];
-		fireEffectRight.x = 19;
-		fireEffectRight.y = 24;
 
 		this.addGraphic(fireEffectLeft);
 		this.addGraphic(fireEffectRight);
 
-		setHitbox(99, 75);
+		setHitboxTo(baseSprite);
 
 		Input.define("left", [Key.LEFT, Key.A]);
 		Input.define("right", [Key.RIGHT, Key.D]);
@@ -96,17 +112,32 @@ class Player extends Entity {
 	public function shoot() {
 		if (this.y > 0) {
 			var score:Array<Score> = [];
-
 			this.scene.getClass(Score, score);
 
-			score[0].rem(500);
-			this.scene.add(new Bullet(this.x, this.y - this.height / 2));
+			score[0].rem(250);
+			var ship:Int = Save.load().ship_type;
+
+			if (ship == 3){
+				this.scene.add(new Bullet(this.x, this.y - this.height / 2));
+			}	
+			else if (ship == 1) {
+				this.scene.add(new Bullet(this.x + 40, this.y - 20));
+				this.scene.add(new Bullet(this.x - 40, this.y - 20));
+			}	
+			else if (ship == 2) {
+				this.scene.add(new Bullet(this.x, this.y - this.height / 2));
+				this.scene.add(new Bullet(this.x - 40, this.y - 20));
+				this.scene.add(new Bullet(this.x + 40, this.y - 20));
+			}
 			laser.play();
 		}
 	}
 
 	public function die() {
 		this.visible = false;
+		var score:Array<Score> = []; 
+		this.scene.getClass(Score, score);
+		
 
 		this.scene.add(new Explosion(this.x, this.y, this));
 
@@ -115,8 +146,10 @@ class Player extends Entity {
 		var txt:Text = new Text("You died!", HXP.halfWidth - 225, HXP.halfHeight - 250, 500, 50, {size: 100});
 		txt.font = Assets.getFont("font/kenpixel_mini_square.ttf").fontName;
 
+		Save.save("money", score[0].score);
+
 		this.scene.addGraphic(txt);
-		this.scene.add(new MenuButton(HXP.halfWidth, HXP.halfHeight - 50, "Retry?"));
+		this.scene.add(new MenuButton(HXP.halfWidth, HXP.halfHeight - 50, "Store"));
 		this.scene.add(new MenuButton(HXP.halfWidth, HXP.halfHeight + 50, "Menu"));
 	}
 
@@ -135,12 +168,8 @@ class Player extends Entity {
 				currentAnim = 0;
 
 			fireEffectLeft = fireEffectsLeft[currentAnim];
-			fireEffectLeft.x = -30;
-			fireEffectLeft.y = 24;
 
 			fireEffectRight = fireEffectsRight[currentAnim];
-			fireEffectRight.x = 19;
-			fireEffectRight.y = 24;
 
 			graphic = baseSprite;
 			this.addGraphic(fireEffectLeft);
@@ -185,13 +214,14 @@ class Player extends Entity {
 	private var fireEffectsLeft:Array<Image> = [];
 	private var fireEffectsRight:Array<Image> = [];
 
+	private var moveSpeed:Float;
+	public var health:Int;
 
 	private var fireEffectLeft:Image;
 	private var fireEffectRight:Image;
 
-	private var moveSpeed:Int = 7;
-	private var hitPause:Float = 0;
 
+	private var hitPause:Float = 0;
 	private var animWait:Float = .75;
 	private var currentAnim:Int = 0;
 

@@ -2,6 +2,8 @@ import com.haxepunk.Entity;
 import com.haxepunk.graphics.Image;
 import com.haxepunk.graphics.Text;
 import com.haxepunk.utils.Input;
+import com.haxepunk.utils.Touch;
+
 import openfl.Assets;
 
 class StoreItem extends Entity {
@@ -64,6 +66,23 @@ class StoreItem extends Entity {
 		this.addGraphic(button);
 		this.addGraphic(text);
 		this.addGraphic(description);
+
+		if (Input.mouseReleased) {
+			if ((Input.mouseX > this.left && Input.mouseX < this.right) && (Input.mouseY > this.top && Input.mouseY < this.bottom)) {
+				buy();
+			}
+		}
+	}
+
+	private function buy() {
+		var save = Save.load();
+		if (save.money >= prices[which][currentSprite]) {
+			Save.save("ship", items[which][currentSprite]);
+			Save.save("ship_type", which);
+			Save.save("ship_color", currentSprite);
+			Save.save("money", save.money - prices[which][currentSprite]);
+			trace("Bought something");
+		}
 	}
 
 	public function goLeft() {

@@ -13,6 +13,9 @@ class Bullet extends Entity {
 		graphic = laser1;
 
 		setHitboxTo(laser1);
+		laser1.centerOrigin();
+		laser2.centerOrigin();
+		this.centerOrigin();
 
 		type = "bullet";
 

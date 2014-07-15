@@ -4,14 +4,16 @@ import com.haxepunk.graphics.Text;
 
 import openfl.Assets;
 
+import Save;
+
 class Score extends Entity {
 
 	public function new() {
 		super(HXP.halfWidth, 30);
 
 		name = "score";
-		score = 1000;
-		scoreText = new Text("$1000", 0, 0, 0, 0, {size : 50, /*align : "center",*/ color : 0xFFF000});
+		score = Save.load().money;
+		scoreText = new Text("$" + score, 0, 0, 0, 0, {size : 50, align : "center", color : 0xFFF000});
 		scoreText.font = Assets.getFont("font/kenpixel_mini_square.ttf").fontName;
 
 		layer = -3;

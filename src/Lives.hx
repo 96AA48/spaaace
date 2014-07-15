@@ -3,17 +3,20 @@ import com.haxepunk.graphics.Image;
 import com.haxepunk.HXP;
 
 import Player;
+import Save;
 
 class Lives extends Entity {
 
 	public function new () {
-		baseSprite = new Image("graphics/playerShip1_green.png");
+		baseSprite = new Image("graphics/playerShip" + Save.load().ship_type + "_green.png");
 		sprite = [
 			baseSprite,
-			new Image("graphics/playerShip1_damage1.png"),
-			new Image("graphics/playerShip1_damage2.png"),
-			new Image("graphics/playerShip1_damage3.png")
+			new Image("graphics/playerShip" + Save.load().ship_type + "_damage1.png"),
+			new Image("graphics/playerShip" + Save.load().ship_type + "_damage2.png"),
+			new Image("graphics/playerShip" + Save.load().ship_type + "_damage3.png")
 		];
+		
+		maxDamage = Save.load().ship_type + Save.load().ship_color;
 
 		liveBar = Image.createRect(Math.floor(baseSprite.width * .75), 10, 0x00FF00);
 		liveBar.y += 65;
@@ -42,13 +45,13 @@ class Lives extends Entity {
 
 	public override function update() {
 		graphic = baseSprite;
-		this.addGraphic(sprite[damage]);
+		this.addGraphic(sprite[Math.floor((damage / maxDamage) * 4)]);
 
-		liveBar.scaledWidth = (liveBar.width / 4) * (4 - damage);
+		liveBar.scaledWidth = (liveBar.width / maxDamage) * (maxDamage - damage);
 
 		this.addGraphic(liveBar);
 
-		if (damage > 3) {
+		if (damage == maxDamage) {
 			var player:Array<Player> = [];
 			this.scene.getClass(Player, player);
 			player[0].die();
@@ -61,6 +64,8 @@ class Lives extends Entity {
 	private var sprite:Array<Image> = [];
 	private var baseSprite:Image;
 	private var liveBar:Image;
+
 	private var damage:Int;
+	private var maxDamage:Int;
 
 }

@@ -62,8 +62,6 @@ class StoreArrows extends Entity {
 			}
 		}
 
-		Input.touchPoints(onTouch);
-
 	}
 
 	private function onTouch(touch:Touch) {

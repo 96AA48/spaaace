@@ -50,8 +50,6 @@ class Boss extends Entity {
 
 		var enemies:Array<Enemy> = [];
 		this.scene.getClass(Enemy, enemies);
-
-		trace(enemies.length + ", " + maxEnemies);
  
 		if (spawnTimer < 0 && enemies.length != maxEnemies && canSpawn) {
 			this.scene.add(new Enemy(this.width / 2, 20, color, Math.floor(Math.random() * 4) + 1));

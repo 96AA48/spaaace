@@ -39,48 +39,24 @@ class MenuButton extends Entity {
 	}
 
 	public override function update() {
-		Input.touchPoints(onTouch);
 
 		if (Input.mouseReleased) {
-			if ((Input.mouseX > this.left && Input.mouseX < this.right) && (Input.mouseY > this.top && Input.mouseY < this.bottom)) {
-				if (this.text.text != "Menu") {
+			if ((Input.mouseX > this.left && Input.mouseX < this.right) && (Input.mouseY > this.top && Input.mouseY < this.bottom) || Input.pressed("enter")) {
+				if (this.text.text == "Retry" || this.text.text == "Play!") {
 					HXP.scene = null;
 					Assets.cache.clear();
 					HXP.scene = new MainScene();
+				}
+				else if (this.text.text == "Store") {
+					HXP.scene = null;
+					Assets.cache.clear();
+					HXP.scene = new StoreScene();
 				}
 				else  {
 					HXP.scene = null;
 					Assets.cache.clear();
 					HXP.scene = new MenuScene();
 				}
-			}
-		}
-
-		if (Input.check("enter")) {
-			if (this.text.text != "Menu") {
-				HXP.scene = null;
-				Assets.cache.clear();
-				HXP.scene = new MainScene();
-			}
-			else  {
-				HXP.scene = null;
-				Assets.cache.clear();
-				HXP.scene = new MenuScene();
-			}
-		}
-	}
-
-	private function onTouch(touch:Touch) {
-		if ((touch.x > this.left && touch.x < this.right) && (touch.y > this.top && touch.y < this.bottom)) {
-			if (this.text.text != "Menu") {
-				HXP.scene = null;
-				Assets.cache.clear();
-				HXP.scene = new MainScene();
-			}
-			else  {
-				HXP.scene = null;
-				Assets.cache.clear();
-				HXP.scene = new MenuScene();
 			}
 		}
 	}
