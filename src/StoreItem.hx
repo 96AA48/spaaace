@@ -93,7 +93,7 @@ class StoreItem extends Entity {
 		"Heavy Laser"
 	];
 
-	private var items:Array<Array<String>> = [
+	public var items:Array<Array<String>> = [
 		[
 			"playerShip3_green.png",
 			"playerShip3_blue.png",

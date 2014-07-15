@@ -7,6 +7,8 @@ import openfl.Assets;
 import StoreItem;
 import StoreArrows;
 
+import Save;
+
 class StoreScene extends Scene {
 	
 	public override function begin() {
@@ -20,6 +22,8 @@ class StoreScene extends Scene {
 			add(new StoreItem(HXP.halfWidth, 200 + (i * 200), i));
 			add(new StoreArrows(HXP.halfWidth, 200 + (i * 200), i));
 		}
+
+		trace(Save.load());
 	}
 
 	public override function update() {
