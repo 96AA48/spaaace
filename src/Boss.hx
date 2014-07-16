@@ -7,6 +7,8 @@ import com.haxepunk.HXP;
 import Enemy;
 import Explosion;
 import Spawner;
+import Bullet;
+import Save;
 
 class Boss extends Entity {
 
@@ -89,7 +91,13 @@ class Boss extends Entity {
 		var bullet:Entity = this.collide("bullet", this.x, this.y);
 
 		if (bullet != null) {
-			this.health -= 1;
+			if (Save.load().laser == 0)
+				damage = 1;
+			else if (Save.load().laser == 1) 
+				damage = 1.25;
+			else if (Save.load().laser == 2)
+				damage = 1.5;
+			this.health -= damage;
 			this.scene.remove(bullet);
 		}
 	}
@@ -104,10 +112,11 @@ class Boss extends Entity {
 	];
 
 	private var color:Int;
-	private var health:Int;
-	private var originalHealth:Int;
+	private var health:Float;
+	private var originalHealth:Float;
 	private var healthBar:Image;
 	private var healthBarBackground:Image;
+	private var damage:Float;
 
 	private var maxEnemies:Int;
 	private var canSpawn:Bool = false;

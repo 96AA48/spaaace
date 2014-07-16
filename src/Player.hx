@@ -21,13 +21,11 @@ class Player extends Entity {
 		baseSprite = new Image("graphics/" + Save.load().ship);
 
 		if (Save.load().ship_type == 1) 
-			moveSpeed = 10;
-		else if (Save.load().ship_type == 2) 
 			moveSpeed = 7;
-		else 
+		else if (Save.load().ship_type == 2) 
 			moveSpeed = 5;
-
-		trace(moveSpeed + ", " + Save.load().ship_type);
+		else 
+			moveSpeed = 4;
 
 		shield = new Image("graphics/shield1.png");
 

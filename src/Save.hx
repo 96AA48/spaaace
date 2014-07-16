@@ -18,7 +18,7 @@ class Save extends Entity {
 			"ship" : Data.readString("ship" , "playerShip3_green.png"),
 			"ship_type" : Data.readInt("ship_type", 3),
 			"ship_color" : Data.readInt("ship_color", 1),
-			"laser" : Data.readString("laser", "laserGreen04.png"),
+			"laser" : Data.readInt("laser", 0),
 			"has_heavy_laser" : Data.readBool("heavy_laser", false),
 			"money" : Data.readInt("money", 1000)
 		};

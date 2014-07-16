@@ -77,9 +77,24 @@ class StoreItem extends Entity {
 	private function buy() {
 		var save = Save.load();
 		if (save.money >= prices[which][currentSprite]) {
-			Save.save("ship", items[which][currentSprite]);
-			Save.save("ship_type", which);
-			Save.save("ship_color", currentSprite);
+			if (which <= 2) {
+				if (which == 0)
+					Save.save("ship_type", 3);
+				else if (which == 1) 
+					Save.save("ship_type", 1);
+				else
+					Save.save("ship_type", 2);
+			
+				Save.save("ship", items[which][currentSprite]);
+				Save.save("ship_color", currentSprite);
+			}
+			else {
+				if (which == 4) 
+					Save.save("heavy_laser", true);
+				else
+					Save.save("laser", currentSprite);
+			}
+
 			Save.save("money", save.money - prices[which][currentSprite]);
 			trace("Bought something");
 		}
@@ -167,25 +182,26 @@ class StoreItem extends Entity {
 	private var prices:Array<Array<Int>> = [
 		[
 			50000,
-			70000,
-			90000
-		],
-		[
-			100000,
-			120000,
-			140000
-		],
-		[
 			150000,
-			200000,
-			300000
+			200000
+		],
+		[
+			250000,
+			300000,
+			350000
+		],
+		[
+			400000,
+			450000,
+			500000
 		],
 		[
 			50000,
-			100000
+			100000,
+			150000
 		],
 		[
-			150000
+			200000
 		]
 
 	];

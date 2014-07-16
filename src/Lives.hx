@@ -11,9 +11,9 @@ class Lives extends Entity {
 		baseSprite = new Image("graphics/" + Save.load().ship);
 		sprite = [
 			baseSprite,
-			new Image("graphics/playerShip" + (Save.load().ship_type + 1) + "_damage1.png"),
-			new Image("graphics/playerShip" + (Save.load().ship_type + 1) + "_damage2.png"),
-			new Image("graphics/playerShip" + (Save.load().ship_type + 1) + "_damage3.png")
+			new Image("graphics/playerShip" + (Save.load().ship_type)  + "_damage1.png"),
+			new Image("graphics/playerShip" + (Save.load().ship_type) + "_damage2.png"),
+			new Image("graphics/playerShip" + (Save.load().ship_type) + "_damage3.png")
 		];
 		
 		maxDamage = Save.load().ship_type + Save.load().ship_color;

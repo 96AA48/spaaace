@@ -6,6 +6,7 @@ import com.haxepunk.Sfx;
 import Player;
 import Score;
 import EnemyBullet;
+import Save;
 
 class Enemy extends Entity {
 
@@ -139,7 +140,13 @@ class Enemy extends Entity {
 		var bullet:Entity = collide("bullet", this.x, this.y);
 
 		if (bullet != null) {
-			health -= 1;
+			if (Save.load().laser == 0)
+				damage = 1;
+			else if (Save.load().laser == 1) 
+				damage = 1.25;
+			else if (Save.load().laser == 2)
+				damage = 1.5;
+			health -= damage;
 			var score:Array<Score> = [];
 			this.scene.getClass(Score, score);
 
@@ -148,7 +155,7 @@ class Enemy extends Entity {
 			this.scene.remove(bullet);
 		}
 
-		if (health == 0) {
+		if (health <= 0) {
 			die();
 		}
 	}
@@ -175,10 +182,11 @@ class Enemy extends Entity {
 
 	private var color:Int;
 	private var enemyType:Int;
-	private var health:Int;
-	private var originalHealth:Int;
+	private var health:Float;
+	private var originalHealth:Float;
 	private var dying:Bool = false;
 	private var died:Bool = false;
+	private var damage:Float;
 
 	private var arr:Array<Float>;
 	private var antX:Float;
