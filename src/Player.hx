@@ -21,11 +21,11 @@ class Player extends Entity {
 		baseSprite = new Image("graphics/" + Save.load().ship);
 
 		if (Save.load().ship_type == 1) 
-			moveSpeed = 7;
+			moveSpeed = 9;
 		else if (Save.load().ship_type == 2) 
-			moveSpeed = 5;
+			moveSpeed = 7;
 		else 
-			moveSpeed = 4;
+			moveSpeed = 5;
 
 		shield = new Image("graphics/shield1.png");
 
@@ -95,16 +95,27 @@ class Player extends Entity {
 			this.y -= moveSpeed;
 		}
 
-		if (Input.pressed("shoot")) {
-			shoot();
+		if (Input.released("shoot")) {
+			if (holdShoot > .5 && Save.load().has_heavy_laser) {
+				heavyShoot();
+				holdShoot = 0;
+			}
+			else {
+				shoot();
+				holdShoot = 0;
+			}
+		}
+
+		if (Input.check("shoot")) {
+			holdShoot += HXP.elapsed;
 		}
 
 		Input.touchPoints(onTouch);
 	}
 
 	private function onTouch(touch:Touch) {
-		if (touch.y < HXP.height - 100 && (touch.y > 700) && this.y > 0)
-			this.moveTowards(touch.x - (this.width / 2), touch.y - (this.height * 2), moveSpeed * 1.5);
+		if (!(touch.x < 100 && touch.y > HXP.height - 100) && this.y > 0)
+			this.moveTowards(touch.x, touch.y - (this.height * 2), moveSpeed);
 	}
 
 	public function shoot() {
@@ -127,6 +138,17 @@ class Player extends Entity {
 				this.scene.add(new Bullet(this.x - 40, this.y - 20));
 				this.scene.add(new Bullet(this.x + 40, this.y - 20));
 			}
+			laser.play();
+		}
+	}
+
+	public function heavyShoot() {
+		if (this.y > 0) {
+			var score:Array<Score> = [];
+			this.scene.getClass(Score, score);
+			score[0].rem(1000);
+
+			this.scene.add(new Bullet(this.x, this.y - this.height / 2, true));
 			laser.play();
 		}
 	}
@@ -223,6 +245,7 @@ class Player extends Entity {
 	private var hitPause:Float = 0;
 	private var animWait:Float = .75;
 	private var currentAnim:Int = 0;
+	private var holdShoot:Float = 0;
 
 	public var shielded:Bool = false;
 	public var shieldTimer:Float = 1;

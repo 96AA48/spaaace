@@ -10,7 +10,7 @@ import Asteroid;
 class Spawner extends Entity {
 
 	public function new() {
-		super(0,0);
+		super();
 	}
 
 	public override function update() {
@@ -39,7 +39,7 @@ class Spawner extends Entity {
 				enemyTimer = 1;
 			}
 
-			if (sublevel == 2 && !bossSpawned) {
+			if (sublevel == 2 && !bossSpawned && enemies.length == 0) {
 				this.scene.add(new Boss(level));
 				bossSpawned = true;
 			}

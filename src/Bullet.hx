@@ -4,13 +4,19 @@ import com.haxepunk.HXP;
 
 class Bullet extends Entity {
 
-	public function new(x:Float, y:Float, ?isHeavyLaser:Bool) {
+	public function new(x:Float, y:Float, ?heavylaser:Bool) {
 		super(x, y);
+		isHeavyLaser = heavylaser;
 
 		which = Save.load().laser;
-
-		laser1 = new Image(laser[which][0]);
-		laser2 = new Image(laser[which][1]);
+		if (!isHeavyLaser) {			
+			laser1 = new Image(laser[which][0]);
+			laser2 = new Image(laser[which][1]);
+		}
+		else {
+			laser1 = new Image("graphics/laserBlue15.png");
+			laser2 = new Image("graphics/laserBlue16.png");
+		}
 
 		graphic = laser1;
 
@@ -19,19 +25,30 @@ class Bullet extends Entity {
 		laser2.centerOrigin();
 		this.centerOrigin();
 
-		type = "bullet";
+		if (!isHeavyLaser) {
+			type = "bullet";
+		}
+		else {
+			layer = -4;
+			type = "heavybullet";
+
+		}
 
 	}
 
 	public override function update() {
 		super.update();
 		
-		this.y -= 20;
+		this.y -= moveSpeed;
 
 		timer -= HXP.elapsed;
 
-		if (collide("asteroid", this.x, this.y) != null) {
+		if (collide("asteroid", this.x, this.y) != null && !isHeavyLaser) {
 			this.scene.remove(this);
+		}
+		else if (collide("asteroid", this.x, this.y) != null && isHeavyLaser) {
+			if (this.moveSpeed > 5)
+				this.moveSpeed -= 2;
 		}
 
 		if (timer < 0 || this.y < 200) {
@@ -60,6 +77,8 @@ class Bullet extends Entity {
 
 	private var laser1:Image;
 	private var laser2:Image;
+	private var isHeavyLaser:Bool = false;
+	private var moveSpeed:Float = 20;
 
 	public var which:Int;
 

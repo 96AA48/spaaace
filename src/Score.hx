@@ -16,7 +16,7 @@ class Score extends Entity {
 		scoreText = new Text("$" + score, 0, 0, 0, 0, {size : 50, align : "center", color : 0xFFF000});
 		scoreText.font = Assets.getFont("font/kenpixel_mini_square.ttf").fontName;
 
-		layer = -3;
+		layer = -6;
 
 		this.addGraphic(scoreText);
 	}

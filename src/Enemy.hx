@@ -138,6 +138,7 @@ class Enemy extends Entity {
 		}
 
 		var bullet:Entity = collide("bullet", this.x, this.y);
+		var heavybullet:Entity = this.collide("heavybullet", this.x, this.y);
 
 		if (bullet != null) {
 			if (Save.load().laser == 0)
@@ -153,6 +154,9 @@ class Enemy extends Entity {
 			score[0].add(1500);
 
 			this.scene.remove(bullet);
+		}
+		else if (heavybullet != null) {
+			this.health -= 2;
 		}
 
 		if (health <= 0) {
