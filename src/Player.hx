@@ -114,7 +114,7 @@ class Player extends Entity {
 			var score:Array<Score> = [];
 			this.scene.getClass(Score, score);
 
-			score[0].rem(250);
+			score[0].rem(300);
 			var ship:Int = Save.load().ship_type;
 
 			if (ship == 3){
@@ -149,8 +149,9 @@ class Player extends Entity {
 		Save.save("money", score[0].score);
 
 		this.scene.addGraphic(txt);
-		this.scene.add(new MenuButton(HXP.halfWidth, HXP.halfHeight - 50, "Store"));
-		this.scene.add(new MenuButton(HXP.halfWidth, HXP.halfHeight + 50, "Menu"));
+		this.scene.add(new MenuButton(HXP.halfWidth, HXP.halfHeight - 50, "Retry"));
+		this.scene.add(new MenuButton(HXP.halfWidth, HXP.halfHeight + 50, "Store"));
+		this.scene.add(new MenuButton(HXP.halfWidth, HXP.halfHeight + 150, "Menu"));
 	}
 
 	public override function update() {

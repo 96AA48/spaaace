@@ -25,6 +25,8 @@ class StoreScene extends Scene {
 
 		this.add(new MenuButton(HXP.halfWidth - 220, HXP.height - 50, "Retry"));
 		this.add(new MenuButton(HXP.halfWidth + 220, HXP.height - 50, "Menu"));
+
+		Save.load();
 	}
 
 	public override function update() {

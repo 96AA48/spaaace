@@ -2,12 +2,14 @@ import com.haxepunk.Scene;
 import com.haxepunk.HXP;
 import com.haxepunk.graphics.Text;
 import com.haxepunk.graphics.Backdrop;
+import com.haxepunk.utils.Input;
 import openfl.Assets;
 
 import MenuButton;
 import Title;
 import Spawner;
 import MainScene;
+import Save;
 
 class MenuScene extends Scene {
 
@@ -15,7 +17,7 @@ class MenuScene extends Scene {
 		backdrop = new Backdrop("graphics/darkPurple.png", true, true);
 		var play = new MenuButton(HXP.width / 2, HXP.height / 2, "Play!");
 		var title = new Title();
-		var copy = new Text("By Bram \"96AA48\" van der Veen, 2014\nGraphics and Sfx by Kenney\nMusic by Jensan", HXP.width / 2, HXP.height - 50, {align: "center"});
+		copy = new Text("By Bram \"96AA48\" van der Veen, 2014\nGraphics and Sfx by Kenney\nMusic by Jensan", HXP.width / 2, HXP.height - 50, {align: "center"});
 		var spawner = new Spawner();
 
 		copy.size = 22;
@@ -39,7 +41,14 @@ class MenuScene extends Scene {
 	public override function update() {
 		super.update();
 		backdrop.y += 1;
+
+		if (Input.mousePressed) {
+			if ((Input.mouseY > HXP.height - 200)) {
+				Save.reset();
+			}
+		}
 	}
 
 	private var backdrop:Backdrop;
+	private var copy:Text;
 }
