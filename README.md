@@ -13,5 +13,16 @@ Thank you for taking a look!
 ![alt text](http://i.imgur.com/61cdXXx.png "Death screen")
 ![alt text](http://i.imgur.com/hWzfrWs.png "Store page")
 
+Developed with the development version of HaxePunk (2.5.2 dev) and OpenFL 1.4.0, lime-tools 1.4.0 and lime 1.0.1.
 
+Build with :
+```
+#linux
+lime test linux #-debug
+
+#windows
+lime test windows #-debug
+
+#android
+lime test android #-debug
 
