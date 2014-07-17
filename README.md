@@ -5,3 +5,13 @@ I started this to test out HaxePunk and it more or less grew into a game.
 
 Thank you for taking a look!
 
+> Screenshots : http://imgur.com/a/5Dl2Z#0
+
+![alt text](http://i.imgur.com/OW4HNjH.png "Title screen")
+![alt text](http://i.imgur.com/udfZMew.png "First boss fight")
+![alt text](http://i.imgur.com/usLbqhT.png "Beating the boss")
+![alt text](http://i.imgur.com/61cdXXx.png "Death screen")
+![alt text](http://i.imgur.com/hWzfrWs.png "Store page")
+
+
+
