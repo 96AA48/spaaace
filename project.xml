@@ -4,7 +4,7 @@
 
  	<app file="Main" main="Main" path="bin" />
 
-	<window fps="120þ" background="0x000000" />
+	<window fps="60" background="0x000000" />
 	<window width="360" height="640" resizable="false" unless="mobile" />
 	<window orientation="portrait" fullscreen="true" if="mobile" />
 	<window orientation="portrait" vsync="true" antialiasing="8" if="cpp" />
@@ -12,10 +12,9 @@
 	<source path="src" />
 
 	<haxelib name="HaxePunk" />
-	<haxelib name="openfl" version="1.4.0" />
+	<!-- <haxelib name="openfl" version="1.4.0" /> -->
 
 	<assets path="assets/graphics" rename="graphics" include="*.png|*.jpg" />
-	<assets path="assets/save" rename="save" include="*.save" />
 	<assets path="assets/audio" rename="audio" include="*.mp3" if="flash" />
 	<assets path="assets/audio" rename="audio" include="*.wav|*.ogg" unless="flash" />
 	<assets path="assets/font" rename="font" include="*.ttf" />

@@ -28,7 +28,7 @@ class Pickup extends Entity {
 
 		rand = Math.floor(Math.random() * 3);
 
-		graphic = currentSprite = sprites[randType][rand];
+		graphic = currentSprite = new Image(sprites[randType][rand]);
 
 		if (Math.random() > .5)
 			turnSpeed = -1 * (Math.random() * 4);
@@ -80,21 +80,21 @@ class Pickup extends Entity {
 
 	}
 
-	private var sprites:Array<Array<Image>> = [
+	private var sprites:Array<Array<String>> = [
 		[
-			new Image("graphics/shield_bronze.png"),
-			new Image("graphics/shield_silver.png"),
-			new Image("graphics/shield_gold.png")
+			"graphics/shield_bronze.png",
+			"graphics/shield_silver.png",
+			"graphics/shield_gold.png"
 		],
 		[
-			new Image("graphics/things_bronze.png"),
-			new Image("graphics/things_silver.png"),
-			new Image("graphics/things_gold.png")
+			"graphics/things_bronze.png",
+			"graphics/things_silver.png",
+			"graphics/things_gold.png"
 		],
 		[
-			new Image("graphics/star_bronze.png"),
-			new Image("graphics/star_silver.png"),
-			new Image("graphics/star_gold.png")
+			"graphics/star_bronze.png",
+			"graphics/star_silver.png",
+			"graphics/star_gold.png"
 		]
 	];
 

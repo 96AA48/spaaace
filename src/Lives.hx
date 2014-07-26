@@ -18,6 +18,10 @@ class Lives extends Entity {
 		
 		maxDamage = Save.load().ship_type + Save.load().ship_color;
 
+		if (Save.load().ship_type == 1) {maxDamage++;};
+
+		trace(maxDamage);
+
 		liveBar = Image.createRect(Math.floor(baseSprite.width * .75), 10, 0x00FF00);
 		liveBar.y += 65;
 

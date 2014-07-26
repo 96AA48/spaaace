@@ -22,6 +22,8 @@ class EnemyBullet extends Entity {
 		graphic = sprite[0];
 
 		type = "enemybullet";
+
+		layer = -4;
 	}
 
 	public override function update() {

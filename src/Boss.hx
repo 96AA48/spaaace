@@ -15,7 +15,7 @@ class Boss extends Entity {
 	public function new (clr:Int) {
 
 		color = clr;
-		currentSprite = sprites[color];
+		currentSprite = new Image(sprites[color]);
 		currentSprite.scale = 8;
 		currentSprite.smooth = false;
 
@@ -108,11 +108,11 @@ class Boss extends Entity {
 
 	private var currentSprite:Image;
 
-	private var sprites:Array<Image> = [
-		new Image("graphics/ufoGreen.png"),
-		new Image("graphics/ufoBlue.png"),
-		new Image("graphics/ufoRed.png"),
-		new Image("graphics/ufoYellow.png")
+	private var sprites:Array<String> = [
+		"graphics/ufoGreen.png",
+		"graphics/ufoBlue.png",
+		"graphics/ufoRed.png",
+		"graphics/ufoYellow.png"
 	];
 
 	private var color:Int;

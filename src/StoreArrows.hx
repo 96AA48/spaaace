@@ -7,10 +7,10 @@ import StoreItem;
 
 class StoreArrows extends Entity {
 
-	public function new(x:Float, y:Float, type:Int) {
+	public function new(x:Float, y:Float, z:Int) {
 		super(x - 230, y);
-		which = type;
-		if (type != 4)
+		which = z;
+		if (z != 4)
 			currentItem = 1;
 		else 
 			currentItem = 0;
@@ -43,39 +43,25 @@ class StoreArrows extends Entity {
 			arrowLeft.visible = false;
 		else 
 			arrowLeft.visible = true;
+
 		if (currentItem == storeItems[which].items[which].length - 1) 
 			arrowRight.visible = false;
 		else
 			arrowRight.visible = true;
 
 		if (Input.mouseReleased) {
-
 			if (Input.mouseY > this.top && Input.mouseY < this.bottom) {
 				if (Input.mouseX > this.left && Input.mouseX < this.left + 100) {
-					storeItems[which].goLeft();
+					storeItems[(storeItems.length - 1) - which].goLeft();
 					if (currentItem != 0) currentItem--;
 				}
 				if (Input.mouseX < this.right && Input.mouseX > this.right - 100) {
-					storeItems[which].goRight();
+					storeItems[(storeItems.length - 1) - which].goRight();
 					if (currentItem != storeItems[which].items[which].length - 1) currentItem++;
 				}
 			}
 		}
 
-	}
-
-	private function onTouch(touch:Touch) {
-		var storeItems:Array<StoreItem> = [];
-		this.scene.getClass(StoreItem, storeItems);
-
-		if (touch.y > this.top && touch.y < this.bottom) {
-			if (touch.x > this.left && touch.x < this.left + 100) {
-				storeItems[which].goLeft();
-			}
-			if (touch.x < this.right && touch.x > this.right - 100) {
-				storeItems[which].goRight();	
-			}
-		}
 	}
 
 	private var arrowLeft:Image;
