@@ -23,6 +23,7 @@ class Score extends Entity {
 
 	public function add(x:Int) {
 		score += x;
+		#if debug score += 10000; #end
 		scoreText.text = "$" + score;
 	}
 

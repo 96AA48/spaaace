@@ -6,6 +6,7 @@ import Boss;
 import Star;
 import Pickup;
 import Asteroid;
+import Overlay;
 
 class Spawner extends Entity {
 
@@ -17,10 +18,13 @@ class Spawner extends Entity {
 		enemyTimer -= HXP.elapsed;
 		var enemies:Array<Enemy> = [];
 		var bosses:Array<Boss> = [];
+		var overlay:Array<Overlay> = [];
+
 		this.scene.getClass(Enemy, enemies);
 		this.scene.getClass(Boss, bosses);
+		this.scene.getClass(Overlay, overlay);
 
-		if (level != 4) {
+		if (level != 4 && overlay.length == 0) {
 			if (enemyType == 6) {sublevel++; enemyType = 1;}
 
 			if (enemies.length < 1 && sublevel < 2) {
@@ -48,7 +52,7 @@ class Spawner extends Entity {
 				level++; enemyType = 1; sublevel = 0; trace("Next level!");
 			}
 		}
-		else {
+		else if (overlay.length == 0) {
 			trace("YOU BEAT THE GAME!");
 		}
 
@@ -57,19 +61,22 @@ class Spawner extends Entity {
 		spawnAsteroidTime -= HXP.elapsed;
 		spawnPickupTime -= HXP.elapsed;
 
-		if (spawnAsteroidTime < 0) {
-			this.scene.add(new Asteroid(HXP.width * Math.random(), -16));
-			spawnAsteroidTime = .5;
-		}
-
 		if (spawnStarTime < 0) {
 			this.scene.add(new Star(HXP.width * Math.random()));
 			spawnStarTime = .5;
 		}
 
-		if (spawnPickupTime < 0) {
-			this.scene.add(new Pickup(HXP.width * Math.random(), -50));
-			spawnPickupTime = 5 * Math.random() + 5;
+		if (overlay.length == 0) {
+			if (spawnAsteroidTime < 0) {
+				this.scene.add(new Asteroid(HXP.width * Math.random(), -16));
+				spawnAsteroidTime = .5;
+			}
+
+
+			if (spawnPickupTime < 0) {
+				this.scene.add(new Pickup(HXP.width * Math.random(), -50));
+				spawnPickupTime = 5 * Math.random() + 5;
+			}
 		}
 	}
 
