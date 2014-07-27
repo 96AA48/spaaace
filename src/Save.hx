@@ -20,7 +20,8 @@ class Save extends Entity {
 			"ship_color" : Data.readInt("ship_color", 1),
 			"laser" : Data.readInt("laser", 0),
 			"has_heavy_laser" : Data.readBool("heavy_laser", false),
-			"money" : Data.readInt("money", 1000)
+			"money" : Data.readInt("money", 1000),
+			"overlay" : Data.readBool("overlay", true)
 		};
 
 		return data;
@@ -34,11 +35,11 @@ class Save extends Entity {
 			Data.write("laser", "laserGreen04.png");
 			Data.write("heavy_laser", false);
 			Data.write("money", 1000);
+			Data.write("overlay", true);
 
 			Data.save("save/savegame.save", true);
 
 			trace("Reset savefile");
-		
 	}
 
 }

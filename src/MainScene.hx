@@ -10,6 +10,7 @@ import Enemy;
 import Lives;
 import Score;
 import Overlay;
+import Save;
 
 class MainScene extends Scene
 {
@@ -39,7 +40,9 @@ class MainScene extends Scene
 		add(lives);
 		add(score);
 		add(spawner);
-		add(new Overlay());
+		if (Save.load().overlay)
+			add(new Overlay());
+
 		music.play(.1, 0, true);
 	}
 

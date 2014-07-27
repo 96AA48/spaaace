@@ -33,7 +33,7 @@ class MenuButton extends Entity {
 		this.addGraphic(sprite);
 		this.addGraphic(text);
 
-		this.layer = -5;
+		this.layer = -11;
 
 		Input.define("enter", [Key.ENTER, Key.SPACE]);
 	}
