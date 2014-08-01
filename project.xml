@@ -6,7 +6,7 @@
 
 	<window fps="60" background="0x000000" />
 	<window width="360" height="640" resizable="false" unless="mobile" />
-	<window orientation="portrait" height="1280" width="720" fullscreen="true" if="mobile" />
+	<window orientation="portrait" fullscreen="true" if="mobile" />
 	<window orientation="portrait" vsync="true" antialiasing="8" if="cpp" />
 
 	<source path="src" />

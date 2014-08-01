@@ -144,8 +144,6 @@ class Enemy extends Entity {
 			if (Save.load().laser == 0)
 				damage = 1;
 			else if (Save.load().laser == 1) 
-				damage = 1.25;
-			else if (Save.load().laser == 2)
 				damage = 1.5;
 			health -= damage;
 			var score:Array<Score> = [];
@@ -156,7 +154,10 @@ class Enemy extends Entity {
 			this.scene.remove(bullet);
 		}
 		else if (heavybullet != null) {
-			this.health -= 2;
+			if (Save.load().heavy_laser == 0)
+				this.health -= .5;
+			else 
+				this.health -= 1;
 		}
 
 		if (health <= 0) {

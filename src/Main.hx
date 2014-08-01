@@ -13,6 +13,8 @@ class Main extends Engine
 	#if !android
 		HXP.screen.scale = .5;
 		HXP.resize(360, 640);
+	#else
+		HXP.resize(720, 1280);
 	#end
 
 		HXP.scene = new MenuScene();

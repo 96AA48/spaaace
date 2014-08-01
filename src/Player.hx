@@ -96,7 +96,7 @@ class Player extends Entity {
 		}
 
 		if (Input.released("shoot")) {
-			if (holdShoot > .5 && Save.load().has_heavy_laser) {
+			if (holdShoot > .5) {
 				heavyShoot();
 				holdShoot = 0;
 			}

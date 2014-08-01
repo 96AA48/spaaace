@@ -44,8 +44,7 @@ class StoreItem extends Entity {
 			sprites[i].centerOrigin();
 		}
 
-		if (type != 4) currentSprite = 1;
-		else currentSprite = 0;
+		currentSprite = 1;
 
 		this.addGraphic(sprites[currentSprite]);
 
@@ -90,7 +89,7 @@ class StoreItem extends Entity {
 			}
 			else {
 				if (which == 4) 
-					Save.save("heavy_laser", true);
+					Save.save("heavy_laser", currentSprite);
 				else
 					Save.save("laser", currentSprite);
 			}
@@ -145,10 +144,10 @@ class StoreItem extends Entity {
 		],
 		[
 			"laserGreen04.png",
-			"laserGreen06.png",
 			"laserBlue06.png"
 		],
 		[
+			"laserGreen06.png",
 			"laserBlue16.png"
 		]
 	];
@@ -171,10 +170,10 @@ class StoreItem extends Entity {
 		],
 		[
 			"This is the laser you start with, it's decent & does 1 damage.",
-			"This laser is slightly better than the one you start with, it does 1.5 damage.",
 			"This laser does the same amount of damage as you're first, but moves slighly faster."
 		],
 		[
+			"This heavy laser is the strongest laser, it serves as a secondary. To use, hold the shoot button for a few seconds & then release.",
 			"This heavy laser is the strongest laser, it serves as a secondary. To use, hold the shoot button for a few seconds & then release."
 		]
 	];
@@ -196,11 +195,11 @@ class StoreItem extends Entity {
 			500000
 		],
 		[
-			50000,
 			100000,
 			150000
 		],
 		[
+			100000,
 			200000
 		]
 

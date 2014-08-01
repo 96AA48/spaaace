@@ -8,14 +8,18 @@ class Bullet extends Entity {
 		super(x, y);
 		isHeavyLaser = heavylaser;
 
-		which = Save.load().laser;
+		if (!isHeavyLaser)
+			which = Save.load().laser;
+		else
+			which = Save.load().heavy_laser;
+
 		if (!isHeavyLaser) {			
 			laser1 = new Image(laser[which][0]);
 			laser2 = new Image(laser[which][1]);
 		}
 		else {
-			laser1 = new Image("graphics/laserBlue15.png");
-			laser2 = new Image("graphics/laserBlue16.png");
+			laser1 = new Image(heavy_laser[which][0]);
+			laser2 = new Image(heavy_laser[which][1]);
 		}
 
 		graphic = laser1;
@@ -66,12 +70,19 @@ class Bullet extends Entity {
 			"graphics/laserGreen12.png"
 		],
 		[
-			"graphics/laserGreen10.png",
-			"graphics/laserGreen06.png"
-		],
-		[
 			"graphics/laserBlue02.png",
 			"graphics/laserBlue06.png"
+		]
+	];
+
+	private var heavy_laser:Array<Array<String>> = [
+		[
+			"graphics/laserGreen06.png",
+			"graphics/laserGreen10.png"
+		],
+		[
+			"graphics/laserBlue15.png",
+			"graphics/laserBlue16.png"
 		]
 	];
 

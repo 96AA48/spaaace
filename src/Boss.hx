@@ -90,25 +90,30 @@ class Boss extends Entity {
 
 		var bullet:Entity = this.collide("bullet", this.x, this.y);
 		var heavybullet:Entity = this.collide("heavybullet", this.x, this.y);
+		var score:Array<Score> = [];
+		this.scene.getClass(Score, score);
 
-		if (bullet != null || heavybullet != null) {
-			var score:Array<Score> = [];
-			this.scene.getClass(Score, score);
+		if (bullet != null) {
 			score[0].add(1500);
+		}
+
+		if (heavybullet != null) {
+			score[0].add(10);
 		}
 
 		if (bullet != null) {
 			if (Save.load().laser == 0)
 				damage = 1;
 			else if (Save.load().laser == 1) 
-				damage = 1.25;
-			else if (Save.load().laser == 2)
 				damage = 1.5;
 			this.health -= damage;
 			this.scene.remove(bullet);
 		}
 		else if (heavybullet != null) {
-			this.health -= 2;
+			if (Save.load().heavy_laser == 0)
+				this.health -= .5;
+			else 
+				this.health -= 1;
 		}
 	}
 

@@ -19,7 +19,7 @@ class Save extends Entity {
 			"ship_type" : Data.readInt("ship_type", 3),
 			"ship_color" : Data.readInt("ship_color", 1),
 			"laser" : Data.readInt("laser", 0),
-			"has_heavy_laser" : Data.readBool("heavy_laser", false),
+			"heavy_laser" : Data.readInt("heavy_laser", 0),
 			"money" : Data.readInt("money", 1000),
 			"overlay" : Data.readBool("overlay", true)
 		};
@@ -33,7 +33,7 @@ class Save extends Entity {
 			Data.write("ship_type", 3);
 			Data.write("ship_color", 1);
 			Data.write("laser", "laserGreen04.png");
-			Data.write("heavy_laser", false);
+			Data.write("heavy_laser", 0);
 			Data.write("money", 1000);
 			Data.write("overlay", true);
 
